@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Upload, Download, Sparkles, FileText, Zap, ChevronDown } from "lucide-react"
+import ReactMarkdown from "react-markdown"
 
 export default function ResumeTailorApp() {
   const [resumeFile, setResumeFile] = useState<File | null>(null)
@@ -274,10 +275,26 @@ export default function ResumeTailorApp() {
                     </Button>
                   </div>
                 ) : tailoredResume ? (
-                  <div className="bg-muted/50 rounded-lg p-6 min-h-[400px]">
-                    <pre className="whitespace-pre-wrap text-sm text-foreground font-mono leading-relaxed">
-                      {tailoredResume}
-                    </pre>
+                  <div className="bg-muted/50 rounded-lg p-6 min-h-[400px] overflow-auto">
+                    <div className="markdown-content text-foreground leading-relaxed">
+                      <ReactMarkdown 
+                        components={{
+                          h1: ({children}) => <h1 className="text-2xl font-bold mb-4 text-primary">{children}</h1>,
+                          h2: ({children}) => <h2 className="text-xl font-semibold mb-3 text-primary">{children}</h2>,
+                          h3: ({children}) => <h3 className="text-lg font-medium mb-2 text-primary">{children}</h3>,
+                          p: ({children}) => <p className="mb-3 text-foreground">{children}</p>,
+                          ul: ({children}) => <ul className="list-disc list-inside mb-3 space-y-1">{children}</ul>,
+                          ol: ({children}) => <ol className="list-decimal list-inside mb-3 space-y-1">{children}</ol>,
+                          li: ({children}) => <li className="text-foreground">{children}</li>,
+                          strong: ({children}) => <strong className="font-semibold text-primary">{children}</strong>,
+                          em: ({children}) => <em className="italic text-muted-foreground">{children}</em>,
+                          code: ({children}) => <code className="bg-background px-1 py-0.5 rounded text-sm text-accent font-mono">{children}</code>,
+                          blockquote: ({children}) => <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground mb-3">{children}</blockquote>
+                        }}
+                      >
+                        {tailoredResume}
+                      </ReactMarkdown>
+                    </div>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center min-h-[400px] text-center">

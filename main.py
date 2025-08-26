@@ -92,10 +92,6 @@ Please provide a detailed analysis with recommendations for improving this resum
                 print(response, "agent response")
                 # Extract the structured response
                 analysis = response.final_output
-                
-                # Ensure analysis is not empty
-                if not analysis or analysis.strip() == "":
-                    analysis = "Analysis could not be completed. Please try again with a different resume or job description."
                     
             except Exception as agent_error:
                 # Fallback analysis if agent fails
